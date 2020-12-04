@@ -1,0 +1,42 @@
+
+<div class="card border-primary mb-3">
+  <div class="card-header">Clientes</div>
+  <div class="card-body text-primary">
+    <h5 class="card-title">Listado de clientes</h5>
+    <div class="my-2 text-left">
+      <button  class="btn btn-rounded btn-primary border border-4" type="button" [routerLink]="['/clientes/form']">
+        Crear Cliente
+      </button>
+
+      <button  class="btn btn-rounded btn-primary border border-4" type="button" (click)='verEstadisticas()'>
+        Estadisticas
+      </button>
+    </div>
+    <div *ngIf="clientes?.length == 0" class="alert alert-info">
+      No hay registros en la base de datos!
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="clientes?.length>0">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Edad</th>
+          <th>Fecha nacimiento</th>
+          <th>Proyecci&oacute;n y An&aacute;lisis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.apellido | uppercase }}</td>
+          <td>{{ cliente.edad }}</td>
+          <td>{{ cliente.fechaNacimiento | date:"EEEE dd, MMMM yyyy"}}</td>
+          <td>
+            <button type="button" name="editar" [routerLink]="['/clientes/form', cliente.id]" class="btn btn-primary btn-sm">Visualizar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <paginator-nav *ngIf="paginador" [paginador]="paginador"></paginator-nav>
+  </div>
+</div>
