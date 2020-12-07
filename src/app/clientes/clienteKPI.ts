@@ -1,4 +1,4 @@
-export class ClienteKPI {
-  promedioEdades: number;
-  desviacionEstandarEdades: number;
+export class CustomerKPI {
+  averageAge: number;
+  standardDeviationAge: number;
 }

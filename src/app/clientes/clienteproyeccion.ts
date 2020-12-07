@@ -1,4 +1,4 @@
-export class Customer {
+export class CustomerProjection {
   id: number;
   name: string;
   lastName: string;

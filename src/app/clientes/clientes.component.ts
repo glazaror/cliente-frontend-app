@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from './cliente';
+import { Customer } from './cliente';
 import { ClienteService } from './cliente.service';
 import { tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -12,9 +12,9 @@ import swal from 'sweetalert2';
 })
 export class ClientesComponent implements OnInit {
 
-  clientes: Cliente[];
+  clientes: Customer[];
   paginador: any;
-  clienteSeleccionado: Cliente;
+  clienteSeleccionado: Customer;
   urlBackend: string = URL_BACKEND;
 
   constructor(private clienteService: ClienteService,
@@ -33,10 +33,10 @@ export class ClientesComponent implements OnInit {
         .pipe(
           tap(response => {
             console.log('ClientesComponent: tap 3');
-            (response.content as Cliente[]).forEach(cliente => console.log(cliente.nombre));
+            (response.content as Customer[]).forEach(cliente => console.log(cliente.name));
           })
         ).subscribe(response => {
-          this.clientes = response.content as Cliente[];
+          this.clientes = response.content as Customer[];
           this.paginador = response;
         });
 
@@ -48,11 +48,11 @@ export class ClientesComponent implements OnInit {
   verEstadisticas() {
     this.clienteService.getKPIdeClientes()
       .subscribe(clienteKPI => {
-        swal('Estadisticas', `Promedio Edad: ${clienteKPI.promedioEdades} - Desviaci&oacute;n est&aacute;ndar: ${clienteKPI.desviacionEstandarEdades}`, 'success');
+        swal('Estadisticas', `Promedio Edad: ${clienteKPI.averageAge} - Desviaci&oacute;n est&aacute;ndar: ${clienteKPI.standardDeviationAge}`, 'success');
       })
   }
 
-  abrirModal(cliente: Cliente) {
+  abrirModal(cliente: Customer) {
     this.clienteSeleccionado = cliente;
   }
 

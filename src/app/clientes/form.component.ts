@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from './cliente';
+import { Customer } from './cliente';
 import { ClienteService } from './cliente.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
@@ -10,7 +10,7 @@ import swal from 'sweetalert2';
 })
 export class FormComponent implements OnInit {
 
-  public cliente: Cliente = new Cliente();
+  public cliente: Customer = new Customer();
   titulo: string = "Crear Cliente";
   tituloBoton: string = "Crear";
   modoLectura: boolean = false;
@@ -44,9 +44,9 @@ export class FormComponent implements OnInit {
     console.log(this.cliente);
     this.clienteService.create(this.cliente)
       .subscribe(
-        cliente => {
+        customer => {
           this.router.navigate(['/clientes']);
-          swal('Nuevo cliente', `El cliente ${cliente.nombre} ha sido creado con éxito`, 'success');
+          swal('Nuevo cliente', `El cliente ${this.cliente.name} ha sido creado con éxito`, 'success');
         },
         err => {
           this.errores = err.error.errors as string[];

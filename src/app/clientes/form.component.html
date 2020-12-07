@@ -10,14 +10,14 @@
 
     <form #clienteForm="ngForm">
       <div class="form-group row">
-        <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+        <label for="nombre" class="col-form-label col-sm-3">Nombre</label>
         <div class="col-sm-6">
-          <input [disabled]="modoLectura" type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre" #nombre="ngModel"> <!-- required minlength="4" -->
-          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
-            <div *ngIf="nombre.errors.required">
+          <input [disabled]="modoLectura" type="text" class="form-control" [(ngModel)]="cliente.name" name="nombre" #name="ngModel"> <!-- required minlength="4" -->
+          <div class="alert alert-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
+            <div *ngIf="name.errors.required">
               Nombre es requerido
             </div>
-            <div *ngIf="nombre.errors.minlength">
+            <div *ngIf="name.errors.minlength">
               Nombre debe tener al menos 4 caracteres
             </div>
           </div>
@@ -25,11 +25,11 @@
       </div>
 
       <div class="form-group row">
-        <label for="apellido" class="col-form-label col-sm-2">Apellido</label>
+        <label for="apellido" class="col-form-label col-sm-3">Apellido</label>
         <div class="col-sm-6">
-          <input [disabled]="modoLectura" type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" #apellido="ngModel"> <!-- required -->
-          <div class="alert alert-danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
-            <div *ngIf="apellido.errors.required">
+          <input [disabled]="modoLectura" type="text" class="form-control" [(ngModel)]="cliente.lastName" name="apellido" #lastName="ngModel"> <!-- required -->
+          <div class="alert alert-danger" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+            <div *ngIf="lastName.errors.required">
               Apellido es requerido
             </div>
           </div>
@@ -37,11 +37,11 @@
       </div>
 
       <div class="form-group row">
-        <label for="edad" class="col-form-label col-sm-2">Edad</label>
+        <label for="edad" class="col-form-label col-sm-3">Edad</label>
         <div class="col-sm-6">
-          <input [disabled]="modoLectura" type="text" class="form-control" [(ngModel)]="cliente.edad" name="edad" #edad="ngModel"> <!-- required -->
-          <div class="alert alert-danger" *ngIf="edad.invalid && (edad.dirty || edad.touched)">
-            <div *ngIf="edad.errors.required">
+          <input [disabled]="modoLectura" type="text" class="form-control" [(ngModel)]="cliente.age" name="edad" #age="ngModel"> <!-- required -->
+          <div class="alert alert-danger" *ngIf="age.invalid && (age.dirty || age.touched)">
+            <div *ngIf="age.errors.required">
               Edad es requerido
             </div>
           </div>
@@ -49,11 +49,20 @@
       </div>
 
       <div class="form-group row">
-        <label for="fechaNacimiento" class="col-form-label col-sm-2">Fecha Nacimiento</label>
+        <label for="fechaNacimiento" class="col-form-label col-sm-3">Fecha Nacimiento</label>
         <div class="col-sm-6">
-          <input [disabled]="modoLectura" [matDatepicker]="miDatepicker" class="form-control" [(ngModel)]="cliente.fechaNacimiento" name="fechaNacimiento" style="display:inline; width:300px;">
+          <input [disabled]="modoLectura" [matDatepicker]="miDatepicker" class="form-control" [(ngModel)]="cliente.birthDate" name="fechaNacimiento" style="display:inline; width:300px;">
           <mat-datepicker-toggle [for]="miDatepicker"></mat-datepicker-toggle>
           <mat-datepicker #miDatepicker></mat-datepicker>
+        </div>
+      </div>
+
+      <div class="form-group row" *ngIf="modoLectura">
+        <label for="fechaProbable" class="col-form-label col-sm-3">Fecha probable muerte</label>
+        <div class="col-sm-6">
+          <input [disabled]="true" [matDatepicker]="fechaProbableDatepicker" type="text" class="form-control" [(ngModel)]="cliente.calculatedDeathDate" name="calculatedDeathDate" #calculatedDeathDate="ngModel" style="display:inline; width:300px;">
+          <mat-datepicker-toggle [for]="fechaProbableDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #fechaProbableDatepicker></mat-datepicker>
         </div>
       </div>
 

@@ -27,10 +27,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let cliente of clientes">
-          <td>{{ cliente.nombre }}</td>
-          <td>{{ cliente.apellido | uppercase }}</td>
-          <td>{{ cliente.edad }}</td>
-          <td>{{ cliente.fechaNacimiento | date:"EEEE dd, MMMM yyyy"}}</td>
+          <td>{{ cliente.name }}</td>
+          <td>{{ cliente.lastName | uppercase }}</td>
+          <td>{{ cliente.age }}</td>
+          <td>{{ cliente.birthDate | date:"EEEE dd, MMMM yyyy"}}</td>
           <td>
             <button type="button" name="editar" [routerLink]="['/clientes/form', cliente.id]" class="btn btn-primary btn-sm">Visualizar</button>
           </td>

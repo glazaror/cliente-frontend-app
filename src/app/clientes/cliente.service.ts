@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Cliente } from './cliente';
-import { ClienteKPI } from './clienteKPI';
+import { Customer } from './cliente';
+import { CustomerKPI } from './clienteKPI';
+import { CustomerProjection } from './clienteproyeccion';
 import { HttpClient} from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
@@ -11,56 +12,55 @@ import { URL_BACKEND } from '../config/config';
 
 @Injectable()
 export class ClienteService {
-  private urlEndPointCreate: string = URL_BACKEND + '/api/creacliente';
-  private urlEndPointList: string = URL_BACKEND + '/api/listclientes';
-  private urlEndPointKpi: string = URL_BACKEND + '/api/kpideclientes';
+  private urlEndPoint: string = URL_BACKEND + '/api/customer';
+  private urlEndPointKpi: string = this.urlEndPoint + '/kpi';
 
   constructor(private http: HttpClient, private router: Router) { }
 
   getClientes(page: number): Observable<any> {
-    return this.http.get(this.urlEndPointList + '/page/' + page).pipe(
+    return this.http.get(this.urlEndPoint + '/page/' + page).pipe(
       tap((response: any) => {
         console.log('ClienteService: tap 1');
-        (response.content as Cliente[]).forEach(cliente => console.log(cliente.nombre));
+        (response.content as Customer[]).forEach(cliente => console.log(cliente.name));
       }),
       map((response: any) => {
-        (response.content as Cliente[]).map(cliente => {
-          cliente.nombre = cliente.nombre.toUpperCase();
+        (response.content as Customer[]).map(cliente => {
+          cliente.name = cliente.name.toUpperCase();
           return cliente;
         });
         return response;
       }),
       tap(response => {
         console.log('ClienteService: tap 2');
-        (response.content as Cliente[]).forEach(cliente => console.log(cliente.nombre));
+        (response.content as Customer[]).forEach(cliente => console.log(cliente.name));
       }));
   }
 
-  getKPIdeClientes(): Observable<ClienteKPI> {
-    return this.http.get<ClienteKPI>(this.urlEndPointKpi);
+  getKPIdeClientes(): Observable<CustomerKPI> {
+    return this.http.get<CustomerKPI>(this.urlEndPointKpi);
   }
 
-  create(cliente: Cliente): Observable<Cliente> {
-    return this.http.post(this.urlEndPointCreate, cliente)
+  create(cliente: Customer): Observable<Customer> {
+    return this.http.post(this.urlEndPoint, cliente)
       .pipe(
-        map((response: any) => response.cliente as Cliente),
+        map((response: any) => response.cliente as Customer),
         catchError(e => {
           if (e.status == 400) {
             return throwError(e);
           }
-          if (e.error.mensaje) {
-            console.error(e.error.mensaje);
+          if (e.error.message) {
+            console.error(e.error.message);
           }
           return throwError(e);
         }));
   }
 
-  getCliente(id): Observable<Cliente> {
-    return this.http.get<Cliente>(`${this.urlEndPointList}/${id}`).pipe(
+  getCliente(id): Observable<CustomerProjection> {
+    return this.http.get<CustomerProjection>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e => {
-        if (e.status != 401 && e.error.mensaje) {
+        if (e.status != 401 && e.error.message) {
           this.router.navigate(['/clientes']);
-          console.error(e.error.mensaje);
+          console.error(e.error.message);
         }
 
         return throwError(e);
